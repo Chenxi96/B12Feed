@@ -1,7 +1,7 @@
 import { User } from '../models/dbSchema.js';
+import { SECRET } from '../config/config.js'
 import argon2d from 'argon2';
 import jwt from 'jsonwebtoken';
-import 'dotenv/config';
 
 const signUpUser = async (email, password) => {
     console.log(email, password);
@@ -22,7 +22,7 @@ const verifyPassword = async (password, inputPassword) => {
 }
 
 const createAuthToken = async (userInfo) => {
-    return jwt.sign(JSON.stringify(userInfo), process.env.SECRET);
+    return jwt.sign(JSON.stringify(userInfo), SECRET);
 }
 
 export {

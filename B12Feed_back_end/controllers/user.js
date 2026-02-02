@@ -1,4 +1,5 @@
 import { signUpUser, findUser, verifyPassword, createAuthToken } from '../services/userService.js';
+import { CLIENT_SIDE } from '../config/config.js';
 
 
 const userSignUp = async (request, response) => {
@@ -15,16 +16,20 @@ const userSignUp = async (request, response) => {
     response.json('Hello World')
 };
 
-const loginUser = async (request, response) => {
+const loginUser = async (request, response, next) => {
     // Simulate form request data
-    const email = 'example123@example.com';
-    const password = 'password123';
+    // const email = 'example123@example.com';
+    // const password = 'password123';
     // Attempts to find a specific user and checks password then sends json response object
     try {
-        const user = await findUser(email);
-        if(verifyPassword(user.password, password)) {
+        const user = await findUser(request.body.email);
+
+        if(verifyPassword(user.password, request.body.password)) {
             const sign = await createAuthToken(user);
-            response.json({ message: 'Login Successful', sign })
+            response
+                .cookie('jwt', sign)
+                .redirect(`${CLIENT_SIDE}/discover`)
+            next();
         } else {
             console.log("Password is incorrect!")
         }
