@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import 'dotenv/config';
+import { SECRET } from '../config/config';
 
 const authenticateJWT = async (request, response, next) => {
     const authHeader = request.headers.authorization;
@@ -9,7 +9,7 @@ const authenticateJWT = async (request, response, next) => {
     const token = authHeader.split(' ')[1];
 
     try {
-        const decoded = jwt.verify(token, process.env.SECRET)
+        const decoded = jwt.verify(token, SECRET)
         console.log(decoded);
         request.user = decoded;
     } catch (err) {
