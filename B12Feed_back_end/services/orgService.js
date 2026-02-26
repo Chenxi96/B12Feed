@@ -81,13 +81,12 @@ const resourcePost = async (user, resourceForm, imageFile) => {
         folder: '/B12Feed',
         fileName: imageFile.originalname
     });
-
+    console.log(images)
     const resourceImagePost = await ResourceImage.insertOne({
         image: [images.url],
         image_description: title
     })
 
-    console.log(images)
 
     const resourcePost = await ResourcePost.insertOne({
         organization_id: userOrg,
@@ -108,13 +107,16 @@ const resourcePost = async (user, resourceForm, imageFile) => {
         updated_at: new Date(),
     });
 
-    console.log(resourcePost)
-    
+    resourcePost.resource_image = resourceImagePost;
+    resourceImagePost.resource_post_id = resourcePost._id;
+    await resourcePost.save();
+    await resourceImagePost.save();
+
     return resourcePost;
 }
 
 // Claim a resource
-const claimResource = async(postId, user) => {
+const claimResource = async(postId) => {
     const resourcePost = await ResourcePost.findById(postId);
     console.log(resourcePost)
     const claimResource = await ClaimStatus.insertOne({
@@ -132,13 +134,15 @@ const claimResource = async(postId, user) => {
 
 // Show list of Resource of objects
 const listOfResource = async() => {
-    const listOfResource = await ResourcePost.find({}).populate("resource_image");
+    const listOfResource = await ResourcePost.find({}).populate(["resource_image", "organization_id", "claim_status_id"]);
+    console.log(listOfResource)
     return listOfResource;
 }
 
 // Show a resource object
 const showResource = async(id) => {
     const resource = await ResourcePost.findById(id).populate(["resource_image", "organization_id"]);
+    console.log(resource);
     return resource;
 }
 

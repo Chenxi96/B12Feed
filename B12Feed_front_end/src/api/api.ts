@@ -67,6 +67,7 @@ const apiClient = axios.create({
 export const listResources = async () => {
     try {
         const response = await apiClient.get('/api/discover');
+        console.log(response)
         return response;
     } catch (error: any) {
         throw new Error(error.response?.data?.message || 'Failed to retrieve resources');
@@ -102,7 +103,11 @@ export const getPostById = async (id: number | string): Promise<FoodPostData> =>
 
 export const postFood = async (foodData: any): Promise<number> => {
     try {
-        const { status } = await apiClient.post('/api/resourcePost', foodData);
+        const { status } = await apiClient.post('/api/resourcePost', foodData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
         return status;
     } catch (error: any) {
         throw new Error(error.response?.data?.message || 'Failed to post food');

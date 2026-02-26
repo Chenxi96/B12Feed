@@ -122,7 +122,7 @@ const Discover: React.FC = () => {
                     <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full flex items-center gap-2 shadow-sm z-10">
                       <div className={`w-2 h-2 rounded-full ${post.status === 'available' ? 'bg-emerald-500' : 'bg-amber-500'}`}></div>
                       <span className="text-[11px] font-black text-emerald-700 uppercase tracking-tight">
-                        {post.status || "Available"}
+                        {post?.claim_status_id[0]?.status || "Available"}
                       </span>
                     </div>
                     

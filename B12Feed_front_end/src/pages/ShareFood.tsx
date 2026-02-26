@@ -188,9 +188,9 @@ const ShareFood: React.FC = () => {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="flex flex-col lg:flex-row-reverse gap-12 lg:gap-16">
+        <form onSubmit={handleSubmit} encType='' className="flex flex-col lg:flex-row-reverse gap-12 lg:gap-16">
           <div className="w-full lg:w-[420px] shrink-0">
-            <input type="file" ref={fileInputRef} onChange={handleImageChange} className="hidden" accept="image/*" />
+            <input type="file" name='image' ref={fileInputRef} onChange={handleImageChange} className="hidden" accept="image/*" />
             <div 
               onClick={() => fileInputRef.current?.click()}
               className={`sticky top-8 border-2 border-dashed rounded-[32px] aspect-video lg:aspect-square flex flex-col items-center justify-center overflow-hidden cursor-pointer transition-all ${

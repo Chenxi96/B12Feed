@@ -1,6 +1,7 @@
 import { findUserOrg, resourcePost, updateOrg, claimResource, listOfResource, showResource } from "../services/orgService.js"
 
 const userOrg = async(request, response, next) => {
+    console.log(request.body)
     if(!request.user.email) response.json(400).json({
         message: "Please Log in"
     })
@@ -17,6 +18,7 @@ const userOrg = async(request, response, next) => {
 }
 
 const postResource = async(request, response, next) => {
+    console.log(request.file);
     await resourcePost(request.user, request.body, request.file)
     response.json({
         message: "Hello This ran"
@@ -25,8 +27,8 @@ const postResource = async(request, response, next) => {
 
 const postClaimStatus = async(request, response, next) => {
     console.log(request.body.id)
-    await claimResource(request.body.id, request.user)
-    response.status(200);
+    const claimResponse = await claimResource(request.body.id)
+    response.status(200).json(claimResponse);
 }
 
 const resourceList = async(request, response, next) => {
@@ -37,6 +39,7 @@ const resourceList = async(request, response, next) => {
 const resourceDetail = async(request, response, next) => {
     const id = request.params.id
     const resource = await showResource(id)
+    response.json(resource);
 }
 
 export {
