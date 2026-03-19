@@ -28,26 +28,27 @@ const loginUser = async (request, response, next) => {
     // Attempts to find a specific user and checks password then sends json response object
     try {
         const user = await findUser(request.body.email);
-        if(user) {
-            const authorizePassword = await verifyPassword(user.password, request.body.password);
-            if(authorizePassword) {
-                const sign = await createAuthToken(user);
-                // console.log(sign)
-                response.cookie('jwt', sign).status(200).json({
-                        message: "User authorized"
-                    })
-                next();
-            } else {
-                response.status(401);
-            }
-        } else {
-            response.status(401).json({
-                message: "Please Try again"
-            })
-        }
+        if(!user) return response.status(401).json({ message: "Please try again" });
+
+        const authorizePassword = await verifyPassword(user.password, request.body.password);
+
+        if(!authorizePassword) return response.status(401).json({ message: "Invalid credentials" });
+
+        const sign = await createAuthToken(user);
+        // console.log(sign)
+        
+        return response.cookie('jwt', sign, {
+            httpOnly: true,
+            secure: true,       
+            }).status(200).json({
+            message: "User authorized"
+        })
         
     } catch (err) {
-        console.log(err.message);
+        console.error(err.message);
+        return response.status(500).json({
+            message: "Server error"
+        });
     }
 };
 
