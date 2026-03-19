@@ -3,7 +3,7 @@ import { useLocation, Navigate } from 'react-router-dom';
 
 const PrivateRoute: React.FC<{ children: React.ReactElement }> = ({ children }) => {
   const location = useLocation();
-  const [auth, setAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(false);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const response = async() => {
@@ -13,10 +13,10 @@ const PrivateRoute: React.FC<{ children: React.ReactElement }> = ({ children }) 
       });
       
       if (!authResponse.ok) {
-        setAuth(true);
+        setIsAuth(true);
         setLoading(false);
       } else {
-        setAuth(false)
+        setIsAuth(false)
         setLoading(false);
       }
 
@@ -36,7 +36,7 @@ const PrivateRoute: React.FC<{ children: React.ReactElement }> = ({ children }) 
   }
 
   // 2. AUTHENTICATION CHECK 
-  if (auth) {
+  if (!isAuth) {
     return <Navigate to="/" state={{ from: location }} replace />;
   }
 
