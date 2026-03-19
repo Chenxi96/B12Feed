@@ -1,6 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import type { RootState } from '../store';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Logo from './Logo'; 
 import {
@@ -12,7 +10,6 @@ import {
 } from "react-icons/fi";
 
 const Sidebar = () => {
-  const { user } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -20,9 +17,9 @@ const Sidebar = () => {
 
   // Helper to get initials if no name is provided
   const getInitials = () => {
-    if (user?.firstName) {
-      return user.firstName.charAt(0).toUpperCase();
-    }
+    // if (user?.firstName) {
+    //   return user.firstName.charAt(0).toUpperCase();
+    // }
     return <FiUser />;
   };
 
@@ -78,10 +75,10 @@ const Sidebar = () => {
         </div>
         <div className="text-sm overflow-hidden">
           <p className="font-semibold text-neutral-900 truncate m-0">
-            {user?.firstName ? `${user.firstName} ${user.lastName || ''}` : 'Guest User'}
+            {'Guest User'}
           </p>
           <p className="text-neutral-500 text-xs truncate m-0">
-            {user?.orgName || 'Community Member'}
+            {'Community Member'}
           </p>
         </div>
       </div>

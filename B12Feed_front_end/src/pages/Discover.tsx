@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import type { RootState } from "../store";
 import {
   FiSearch,
   FiMapPin,
@@ -19,7 +17,6 @@ import { listResources, type FoodPostData } from "../api/api";
 
 const Discover: React.FC = () => {
   const navigate = useNavigate();
-  const { user } = useSelector((state: RootState) => state.auth);
   
   const [posts, setPosts] = useState<FoodPostData[]>([]);
   const [loading, setLoading] = useState(true);
