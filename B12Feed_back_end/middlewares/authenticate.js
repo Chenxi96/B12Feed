@@ -2,26 +2,23 @@ import jwt from 'jsonwebtoken';
 import { SECRET } from '../config/config.js';
 
 const authenticateJWT = async (request, response, next) => {
-    const authHeader = request.headers.cookie;
-    if(!authHeader) {
-        response.status(400).json({
-        message: "No JWT token"
-        })
-    } else {
-        const token = authHeader.split("=")[1];
-        try {
-            const decoded = jwt.verify(token, SECRET)
-            if(decoded !== "invalid token") {
-                request.user = decoded;
-            } else {
-                request.user = null;
-            }
-            
-        } catch (err) {
-            console.log(err.message);
-        }
+    const token = request.cookies?.jwt;
+    if(!token) {
+        return response.status(400).json({
+            message: "No token provided"
+        });
     }
-    next(); 
+
+    try {
+        const decoded = jwt.verify(token, SECRET);
+        request.user = decoded;
+        next();
+    } catch (err) {
+        console.log(err.message);
+        return response.status(401).json({
+            message: "Invalid or expired token"
+        });
+    }
 }
 
 export default authenticateJWT;
