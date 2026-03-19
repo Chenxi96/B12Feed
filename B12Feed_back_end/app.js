@@ -15,7 +15,7 @@ connectDB();
 // loadDummyData()
 
 app.use(cors({
-    origin: 'http://localhost:5174',
+    origin: 'https://b12-feed-frontend.vercel.app',
     credentials: true
 }));
 
