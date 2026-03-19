@@ -7,7 +7,7 @@ const PrivateRoute: React.FC<{ children: React.ReactElement }> = ({ children }) 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const response = async() => {
-      const authResponse = await fetch("http://localhost:3001/api", {
+      const authResponse = await fetch("https://b12-feed-backend.vercel.app/api", {
         method: "GET",
         credentials: "include"
       });

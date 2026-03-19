@@ -55,7 +55,7 @@ export interface FoodPostData {
 // --- 2. AXIOS INSTANCE CONFIGURATION ---
 
 const apiClient = axios.create({
-    baseURL: 'http://localhost:3001',
+    baseURL: 'https://b12-feed-backend.vercel.app',
     headers: {
         'Content-Type': 'application/json',
     },
