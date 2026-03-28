@@ -36,7 +36,7 @@ const PrivateRoute: React.FC<{ children: React.ReactElement }> = ({ children }) 
   }
 
   // 2. AUTHENTICATION CHECK 
-  if (!isAuth) {
+  if (isAuth) {
     return <Navigate to="/" state={{ from: location }} replace />;
   }
 
