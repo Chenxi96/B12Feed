@@ -39,7 +39,8 @@ const loginUser = async (request, response, next) => {
         
         return response.cookie('jwt', sign, {
             httpOnly: true,
-            secure: true,       
+            secure: true,
+            sameSite: 'none'
             }).status(200).json({
             message: "User authorized"
         })
