@@ -7,7 +7,7 @@ const PrivateRoute: React.FC<{ children: React.ReactElement }> = ({ children }) 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const response = async() => {
-      const authResponse = await fetch("https://b12-feed-backend.vercel.app/api", {
+      const authResponse = await fetch("https://b12-feed-backend.vercel.app", {
         method: "GET",
         credentials: "include"
       });
@@ -36,7 +36,7 @@ const PrivateRoute: React.FC<{ children: React.ReactElement }> = ({ children }) 
   }
 
   // 2. AUTHENTICATION CHECK 
-  if (isAuth) {
+  if (!isAuth) {
     return <Navigate to="/" state={{ from: location }} replace />;
   }
 
